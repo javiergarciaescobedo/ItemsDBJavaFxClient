@@ -17,7 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -39,10 +38,24 @@ public class Screen0 implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        TableColumn firstNameCol = new TableColumn("A String");
-        firstNameCol.setMinWidth(200);
-        firstNameCol.setCellValueFactory(
-                new PropertyValueFactory<Item, String>("astring"));
+        TableColumn tableColumnAstring = new TableColumn("A String");
+        tableColumnAstring.setMinWidth(50);
+        tableColumnAstring.setPrefWidth(100);
+        tableColumnAstring.setMaxWidth(150);
+        tableColumnAstring.setCellValueFactory(new PropertyValueFactory("astring"));
+ 
+        TableColumn tableColumnAnumber = new TableColumn("A Number");
+        tableColumnAnumber.setMinWidth(50);
+        tableColumnAnumber.setPrefWidth(100);
+        tableColumnAnumber.setMaxWidth(150);
+        tableColumnAnumber.setCellValueFactory(new PropertyValueFactory("anumber"));
+ 
+        TableColumn tableColumnAdate = new TableColumn("A Date");
+        tableColumnAdate.setMinWidth(50);
+        tableColumnAdate.setPrefWidth(100);
+        tableColumnAdate.setMaxWidth(150);
+        tableColumnAdate.setCellValueFactory(new PropertyValueFactory("adate"));
+        UtilJavaFx.setDateFormatColumn(tableColumnAdate, "dd/MM/yyyy");
  
         ArrayList<Item> listItems = new ArrayList();
         // Cargar la lista de items con datos de ejemplo
@@ -55,7 +68,10 @@ public class Screen0 implements Initializable {
         tableView.setItems(observableListItems);
         
         tableView.getColumns().clear();
-        tableView.getColumns().addAll(firstNameCol);
+        tableView.getColumns().addAll(tableColumnAstring, tableColumnAnumber, tableColumnAdate);
+        // Permitir que se reajusten los tamaños de las columnas al cambiar
+        //  el tamaño de la ventana
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }    
 
     @FXML

@@ -31,11 +31,11 @@
               </rowConstraints>
                <children>
                   <Label text="A string" />
-                  <TextField fx:id="textFieldAstring" GridPane.columnIndex="1" />
+                  <TextField fx:id="textFieldAstring" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" />
                   <Label text="A number" GridPane.rowIndex="1" />
-                  <TextField fx:id="textFieldAnumber" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="textFieldAnumber" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="A date" GridPane.rowIndex="2" />
-                  <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <DatePicker fx:id="datePicker" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>
