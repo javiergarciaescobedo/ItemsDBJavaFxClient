@@ -22,19 +22,19 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {            
-//            FXMLLoader personDetailLoader = new FXMLLoader(getClass().getResource("/fxml/Screen0.fxml"));
-//            Parent personDetailParent = (Parent)personDetailLoader.load();
-            Parent personDetailParent = FXMLLoader.load(getClass().getResource("/fxml/Screen0.fxml"));
-            
             root = new StackPane();
+
+            // Cargar primera pantalla (Screen0)
+            Parent personDetailParent = FXMLLoader.load(getClass().getResource("/fxml/Screen0.fxml"));
             root.getChildren().add(personDetailParent);     
             
             Scene scene = new Scene(root, 300, 250);            
-            primaryStage.setTitle("Master Detail FXML");
+            primaryStage.setTitle("Master-Detail FXML");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            // Cerrar la aplicación si no se ha podido cargar la pantalla
             Platform.exit();
         }
     }

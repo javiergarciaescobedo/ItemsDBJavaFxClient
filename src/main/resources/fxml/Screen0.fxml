@@ -2,7 +2,6 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -16,16 +15,16 @@
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0">
-              <columns>
+<!--              <columns>
                 <TableColumn prefWidth="75.0" text="C1" />
                 <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
+              </columns>-->
             </TableView>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Button mnemonicParsing="false" text="Button" />
                   <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" onMouseClicked="#onMouseClickedButtonEdit" text="Button" />
+                  <Button mnemonicParsing="false" onMouseClicked="#onMouseClickedButtonEdit" text="Editar" />
                </children>
             </HBox>
          </children>
