@@ -1,14 +1,18 @@
 package es.javiergarciaescobedo.masterdetailfxml;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
 public class UtilJavaFx {
     
-    public static void setDateFormatColumn(TableColumn dateColumn, String dateFormat) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+    public static void setDateFormatColumn(TableColumn dateColumn, int dateFormat) {
+        DateFormat format = DateFormat.getDateInstance(dateFormat);
         dateColumn.setCellFactory(myDateTableCell -> {
             return new TableCell<Object, Date>() {
                 @Override
@@ -17,11 +21,29 @@ public class UtilJavaFx {
                     if (date == null || dateIsEmpty) {
                         setText(null);
                     } else {
-                        setText(simpleDateFormat.format(date));
+                        setText(format.format(date));
                     }
                 }
             };
-        });
-        
+        });        
     }    
+    
+    public static void setDateInDatePicker(DatePicker datePicker, Date date) {
+        if(date != null) {
+            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); 
+            datePicker.setValue(localDate);
+        }
+    }
+    
+    public static Date getDateFromDatePicket(DatePicker datePicker) {
+        LocalDate localDate = datePicker.getValue();
+        if(localDate != null) {
+            Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+            Date date = Date.from(instant);  
+            return date;
+        } else {
+            return null;
+        }
+    }
+    
 }

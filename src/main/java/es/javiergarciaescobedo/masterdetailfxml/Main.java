@@ -28,7 +28,7 @@ public class Main extends Application {
             Parent personDetailParent = FXMLLoader.load(getClass().getResource("/fxml/Screen0.fxml"));
             root.getChildren().add(personDetailParent);     
             
-            Scene scene = new Scene(root, 300, 250);            
+            Scene scene = new Scene(root, 400, 300);            
             primaryStage.setTitle("Master-Detail FXML");
             primaryStage.setScene(scene);
             primaryStage.show();

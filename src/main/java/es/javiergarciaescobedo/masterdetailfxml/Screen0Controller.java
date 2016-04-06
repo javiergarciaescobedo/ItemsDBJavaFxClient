@@ -2,6 +2,7 @@ package es.javiergarciaescobedo.masterdetailfxml;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
@@ -23,48 +24,50 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Javier García Escobedo <javiergarciaescobedo.es>
  */
-public class Screen0 implements Initializable {
+public class Screen0Controller implements Initializable {
 
     @FXML
     private TableView<Item> tableView;
 
-    public static Item itemSelected;
-    public static int indexItemSelected;
-    public static ObservableList<Item> observableListItems;
-    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        // Columna para String
         TableColumn tableColumnAstring = new TableColumn("A String");
         tableColumnAstring.setMinWidth(50);
         tableColumnAstring.setPrefWidth(100);
         tableColumnAstring.setMaxWidth(150);
         tableColumnAstring.setCellValueFactory(new PropertyValueFactory("astring"));
  
+        // Columna para número
         TableColumn tableColumnAnumber = new TableColumn("A Number");
         tableColumnAnumber.setMinWidth(50);
         tableColumnAnumber.setPrefWidth(100);
         tableColumnAnumber.setMaxWidth(150);
+        tableColumnAnumber.setStyle( "-fx-alignment: CENTER-RIGHT;");
         tableColumnAnumber.setCellValueFactory(new PropertyValueFactory("anumber"));
  
+        // Columna para fecha
         TableColumn tableColumnAdate = new TableColumn("A Date");
         tableColumnAdate.setMinWidth(50);
         tableColumnAdate.setPrefWidth(100);
         tableColumnAdate.setMaxWidth(150);
+        tableColumnAdate.setStyle( "-fx-alignment: CENTER;");
         tableColumnAdate.setCellValueFactory(new PropertyValueFactory("adate"));
-        UtilJavaFx.setDateFormatColumn(tableColumnAdate, "dd/MM/yyyy");
- 
+        UtilJavaFx.setDateFormatColumn(tableColumnAdate, DateFormat.MEDIUM);
+
+        // Lista que contendrá datos
         ArrayList<Item> listItems = new ArrayList();
-        // Cargar la lista de items con datos de ejemplo
+        // Cargar la lista con items de datos de ejemplo
         listItems.add(new Item("item0", 0, Calendar.getInstance().getTime()));
         listItems.add(new Item("item1", 1, Calendar.getInstance().getTime()));
         listItems.add(new Item("item2", 2, Calendar.getInstance().getTime()));
         
         // Pasar la lista a la tabla
-        observableListItems = FXCollections.observableArrayList(listItems);
+        ObservableList<Item> observableListItems = FXCollections.observableArrayList(listItems);
         tableView.setItems(observableListItems);
         
         tableView.getColumns().clear();
@@ -76,14 +79,36 @@ public class Screen0 implements Initializable {
 
     @FXML
     private void onMouseClickedButtonEdit(MouseEvent event) {
-        itemSelected = tableView.getSelectionModel().getSelectedItem();
-        indexItemSelected = tableView.getSelectionModel().getSelectedIndex();
+        showScreen1();
+    }
+
+    @FXML
+    private void onMouseClickedButtonNew(MouseEvent event) {
+        Item item = new Item();
+        tableView.getItems().add(item);
+        tableView.getSelectionModel().select(item);
+        showScreen1();
+    }
+
+    @FXML
+    private void onMouseClickedButtonRemove(MouseEvent event) {        
+        tableView.getItems().remove(tableView.getSelectionModel().getSelectedItem());
+    }
+    
+    private void showScreen1() {
         try {
-            Parent parentScreen1 = FXMLLoader.load(getClass().getResource("/fxml/Screen1.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Screen1.fxml"));
+            Parent parentScreen1 = loader.load();
+            Screen1Controller screen1Controller = loader.getController();
+            // Pasar una referencia a la tabla para que Screen1 pueda acceder a su contenido
+            screen1Controller.setTableView(tableView);
+            // Rellenar Screen1 con los datos del objeto actual
+            screen1Controller.showItemSelectedData();
+            // Mostrar los elementos de Screen1 colgándolo del contenedor raiz
             Main.root.getChildren().add(parentScreen1);
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
     }
     
 }
