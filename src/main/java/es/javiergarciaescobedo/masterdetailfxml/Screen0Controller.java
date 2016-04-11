@@ -1,10 +1,10 @@
 package es.javiergarciaescobedo.masterdetailfxml;
 
+import es.javiergarciaescobedo.masterdetailfxml.model.Item;
+import es.javiergarciaescobedo.masterdetailfxml.model.Items;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +35,13 @@ public class Screen0Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        // Columna para ID
+        TableColumn tableColumnId = new TableColumn("Id");
+        tableColumnId.setMinWidth(50);
+        tableColumnId.setPrefWidth(100);
+        tableColumnId.setMaxWidth(150);
+        tableColumnId.setCellValueFactory(new PropertyValueFactory("id"));
+ 
         // Columna para String
         TableColumn tableColumnAstring = new TableColumn("A String");
         tableColumnAstring.setMinWidth(50);
@@ -59,19 +66,15 @@ public class Screen0Controller implements Initializable {
         tableColumnAdate.setCellValueFactory(new PropertyValueFactory("adate"));
         UtilJavaFx.setDateFormatColumn(tableColumnAdate, DateFormat.MEDIUM);
 
-        // Lista que contendrá datos
-        ArrayList<Item> listItems = new ArrayList();
-        // Cargar la lista con items de datos de ejemplo
-        listItems.add(new Item("item0", 0, Calendar.getInstance().getTime()));
-        listItems.add(new Item("item1", 1, Calendar.getInstance().getTime()));
-        listItems.add(new Item("item2", 2, Calendar.getInstance().getTime()));
-        
+        // Descargar la lista con items que hay en la BD
+        Items items = ItemsDownloader.downloadItems();
         // Pasar la lista a la tabla
-        ObservableList<Item> observableListItems = FXCollections.observableArrayList(listItems);
+        ObservableList<Item> observableListItems = FXCollections.observableArrayList(
+                items.getItemsList());
         tableView.setItems(observableListItems);
         
         tableView.getColumns().clear();
-        tableView.getColumns().addAll(tableColumnAstring, tableColumnAnumber, tableColumnAdate);
+        tableView.getColumns().addAll(tableColumnId, tableColumnAstring, tableColumnAnumber, tableColumnAdate);
         // Permitir que se reajusten los tamaños de las columnas al cambiar
         //  el tamaño de la ventana
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

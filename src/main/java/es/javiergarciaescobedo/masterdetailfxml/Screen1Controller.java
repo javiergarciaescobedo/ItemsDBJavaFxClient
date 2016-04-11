@@ -1,5 +1,6 @@
 package es.javiergarciaescobedo.masterdetailfxml;
 
+import es.javiergarciaescobedo.masterdetailfxml.model.Item;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
