@@ -68,7 +68,7 @@ public class Screen1Controller implements Initializable {
         // ACTUALIZAR el campo fecha
         itemSelected.setAdate(UtilJavaFx.getDateFromDatePicket(datePicker));
         
-        // Cerrar esta pantalla si no hay ningún dato erróneo
+        // Cerrar esta pantalla sólo si no hay ningún dato erróneo
         if(!errorInData) {
             // Actualizar el objeto en la tabla, asignando el mismo objeto
             //  en la posición actual de la lista

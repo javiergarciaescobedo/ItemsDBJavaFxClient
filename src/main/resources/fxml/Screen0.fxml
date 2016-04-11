@@ -1,35 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.javiergarciaescobedo.masterdetailfxml.Screen0Controller">
-    <stylesheets>
-        <URL value="@/styles/styles.css" />
-    </stylesheets>
+
+<StackPane stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.javiergarciaescobedo.masterdetailfxml.Screen0Controller">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox>
          <children>
-            <TableView fx:id="tableView" maxWidth="450.0" minWidth="150.0" prefWidth="300.0" style="-fx-: transparent;">
+            <GridPane fx:id="paneToolBar" styleClass="appbar">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER_LEFT" styleClass="navigation_bar" GridPane.hgrow="NEVER">
+                     <children>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/ic_arrow_back_white_24dp_1x.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" styleClass="title_bar" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="title" text="LabelTitle" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" styleClass="icons-bar" GridPane.columnIndex="2">
+                     <children>
+                        <ImageView onMouseClicked="#onMouseClickedButtonNew" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/ic_add_circle_white_24dp_1x.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView onMouseClicked="#onMouseClickedButtonEdit" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/ic_create_white_24dp_1x.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView onMouseClicked="#onMouseClickedButtonRemove" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/ic_delete_forever_white_24dp_1x.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </HBox>
+               </children>
+            </GridPane>
+            <TableView fx:id="tableView" style="-fx-: transparent;">
                <VBox.margin>
                   <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-               </VBox.margin></TableView>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="16.0">
-               <children>
-                  <Button mnemonicParsing="false" onMouseClicked="#onMouseClickedButtonNew" text="New" />
-                  <Button mnemonicParsing="false" onMouseClicked="#onMouseClickedButtonEdit" text="Edit" />
-                  <Button mnemonicParsing="false" onMouseClicked="#onMouseClickedButtonRemove" text="Remove" />
-               </children>
-               <padding>
-                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-               </padding>
-            </HBox>
+               </VBox.margin>
+            </TableView>
          </children>
       </VBox>
    </children>
-</AnchorPane>
+</StackPane>

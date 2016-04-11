@@ -19,8 +19,8 @@ public class ItemsDownloader {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
             // Generar lista de objetos desde XML descargado de URL
-//            URL url = new URL("http://213.96.173.88:8088/ItemsSampleDBJavaWeb/Main");
-            URL url = new URL("http://192.168.15.230:8088/ItemsSampleDBJavaWeb/Main");
+            URL url = new URL("http://213.96.173.88:8088/ItemsSampleDBJavaWeb/Main");
+//            URL url = new URL("http://192.168.15.230:8088/ItemsSampleDBJavaWeb/Main");
             InputStream is = url.openStream();
             items = (Items) jaxbUnmarshaller.unmarshal(is);
             

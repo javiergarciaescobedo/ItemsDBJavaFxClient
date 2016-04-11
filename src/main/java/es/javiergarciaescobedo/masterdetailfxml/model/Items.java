@@ -1,5 +1,6 @@
 package es.javiergarciaescobedo.masterdetailfxml.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,6 +16,10 @@ public class Items {
     @XmlElement(name = "item")
     private List<Item> itemsList;
 
+    public Items() {
+        itemsList = new ArrayList();
+    }
+    
     public List<Item> getItemsList() {
         return itemsList;
     }
