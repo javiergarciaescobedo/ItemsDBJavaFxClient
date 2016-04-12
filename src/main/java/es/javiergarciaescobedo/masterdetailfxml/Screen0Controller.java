@@ -5,7 +5,6 @@ import es.javiergarciaescobedo.masterdetailfxml.model.Items;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -24,7 +23,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 /**
@@ -75,7 +73,7 @@ public class Screen0Controller implements Initializable {
         UtilJavaFx.setDateFormatColumn(tableColumnAdate, DateFormat.MEDIUM);
 
         // Descargar la lista con items que hay en la BD
-        Items items = ItemsDownloader.downloadItems();
+        Items items = HelperServletConnection.downloadItems();
         // Pasar la lista a la tabla
         ObservableList<Item> observableListItems = FXCollections.observableArrayList(
                 items.getItemsList());
@@ -105,6 +103,11 @@ public class Screen0Controller implements Initializable {
     private void onMouseClickedButtonRemove(MouseEvent event) {
         //tableView.getItems().remove(tableView.getSelectionModel().getSelectedItem());
         try {
+            Items items = new Items();
+            Item itemRemoving = tableView.getSelectionModel().getSelectedItem();
+            items.getItemsList().add(itemRemoving);
+            HelperServletConnection.requestServletDBAction(Items.class, items, 0);
+
             URL url = new URL("http://213.96.173.88:8088/ItemsSampleDBJavaWeb/RequestItems?op=DELETE");
             URLConnection uc = url.openConnection();
             HttpURLConnection conn = (HttpURLConnection) uc;
@@ -113,11 +116,9 @@ public class Screen0Controller implements Initializable {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-type", "text/xml");
 
+            // Enviar al servidor, en formato XML, el elemento seleccionado en la tabla
             JAXBContext jaxbContext = JAXBContext.newInstance(Items.class);
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-            Items items = new Items();
-            Item itemRemoving = tableView.getSelectionModel().getSelectedItem();
-            items.getItemsList().add(itemRemoving);
             jaxbMarshaller.marshal(items, conn.getOutputStream());
 
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));

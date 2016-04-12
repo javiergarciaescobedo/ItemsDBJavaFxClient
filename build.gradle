@@ -1,5 +1,29 @@
 apply plugin: 'java'
 
+// Añadido para evitar el error "no main manifest attribute" al ejecutar el jar
+jar {
+    manifest {
+        attributes 'Main-Class': 'es.javiergarciaescobedo.masterdetailfxml.Main'
+    }
+//    copy {
+//        from 'file:properties/config.properties'    
+//    }
+}
+
+apply plugin: 'application'
+mainClassName = "es.javiergarciaescobedo.masterdetailfxml.Main"
+
+applicationDistribution.from("properties") {
+    into "properties"
+}
+
+//distZip {
+    into(project.name) {
+        from '.'
+        include 'properties/*'
+    }
+}
+
 sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
