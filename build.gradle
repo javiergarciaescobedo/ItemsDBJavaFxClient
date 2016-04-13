@@ -5,24 +5,16 @@ jar {
     manifest {
         attributes 'Main-Class': 'es.javiergarciaescobedo.masterdetailfxml.Main'
     }
-//    copy {
-//        from 'file:properties/config.properties'    
-//    }
 }
 
+
+// Añadir archivo properties en la distribución de la aplicación
 apply plugin: 'application'
 mainClassName = "es.javiergarciaescobedo.masterdetailfxml.Main"
-
-applicationDistribution.from("properties") {
-    into "properties"
+applicationDistribution.from("src/main/resources/properties/config_dist.properties") {
+    into "lib/properties"
 }
 
-//distZip {
-    into(project.name) {
-        from '.'
-        include 'properties/*'
-    }
-}
 
 sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'

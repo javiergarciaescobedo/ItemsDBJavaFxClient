@@ -1,16 +1,11 @@
 package es.javiergarciaescobedo.masterdetailfxml;
 
-import es.javiergarciaescobedo.masterdetailfxml.model.Item;
 import es.javiergarciaescobedo.masterdetailfxml.model.Items;
-import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -18,45 +13,39 @@ import javax.xml.bind.Unmarshaller;
 
 public class HelperServletConnection {
 
-    public static Items downloadItems() {
-        Items items = null;
-        try {
-            // Crear objeto JAXB para interpretar objetos 'Items' desde XML
-            JAXBContext jaxbContext = JAXBContext.newInstance(Items.class);
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+    private static final Logger LOG = Logger.getLogger(HelperServletConnection.class.getName());
+    public static final int ACTION_SELECT = 0;
+    public static final int ACTION_INSERT = 1;
+    public static final int ACTION_UPDATE = 2;
+    public static final int ACTION_DELETE = 3;
 
-            // Generar lista de objetos desde XML descargado de URL
-            URL url = new URL("http://213.96.173.88:8088/ItemsSampleDBJavaWeb/Main");
-//            URL url = new URL("http://192.168.15.230:8088/ItemsSampleDBJavaWeb/Main");
-            InputStream is = url.openStream();
-            items = (Items) jaxbUnmarshaller.unmarshal(is);
-            
-            // Mostrar el contenido de la lista obtenida
-            for (Item item : items.getItemsList()) {
-                System.out.println("id: " + item.getId());
-                System.out.println("astring: " + item.getAstring());
-                System.out.println("anumber: " + item.getAnumber());
-                System.out.println("adate: " + item.getAdate());
-                System.out.println();
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(HelperServletConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return items;
-    }
-    
-    public static List requestServletDBAction(Class className, Object object, int action) {
+    public static Object requestServletDBAction(Object object, int action) {
         try {
             Properties properties = new Properties();
-            properties.load(HelperServletConnection.class.getResourceAsStream("/config.properties"));
+            properties.load(HelperServletConnection.class.getResourceAsStream("/properties/config.properties"));
             String server = properties.getProperty("server");
-//            String dbName = properties.getProperty("db_name");
-//            String dbUser = properties.getProperty("db_user");
-//            String dbPassword = properties.getProperty("db_password");
-
-            System.out.println("server" + server);
-        
-            URL url = new URL("http://213.96.173.88:8088/ItemsSampleDBJavaWeb/RequestItems?op=DELETE");
+            String port = properties.getProperty("port");
+            String servlet = properties.getProperty("servlet");
+            
+            String strAction = "select";
+            switch(action) {
+                case ACTION_SELECT:
+                    strAction = "select";
+                    break;
+                case ACTION_INSERT:
+                    strAction = "insert";
+                    break;
+                case ACTION_UPDATE:
+                    strAction = "update";
+                    break;
+                case ACTION_DELETE:
+                    strAction = "delete";
+                    break;
+            }
+            
+            String strConnection = "http://" + server + ":" + port + "/" + servlet + "?action=" + strAction;
+            URL url = new URL(strConnection);
+            LOG.fine("Connecting to: " + strConnection);
             URLConnection uc = url.openConnection();
             HttpURLConnection conn = (HttpURLConnection) uc;
             conn.setDoInput(true);
@@ -69,16 +58,15 @@ public class HelperServletConnection {
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             jaxbMarshaller.marshal(object, conn.getOutputStream());
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println(inputLine);
-            }
-            in.close();
+            InputStreamReader isr = new InputStreamReader(conn.getInputStream());
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            Object response = jaxbUnmarshaller.unmarshal(isr);
+            isr.close();
+            return response;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
     
 }

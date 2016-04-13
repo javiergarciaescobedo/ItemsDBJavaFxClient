@@ -73,7 +73,9 @@ public class Screen0Controller implements Initializable {
         UtilJavaFx.setDateFormatColumn(tableColumnAdate, DateFormat.MEDIUM);
 
         // Descargar la lista con items que hay en la BD
-        Items items = HelperServletConnection.downloadItems();
+//        Items items = HelperServletConnection.downloadItems();
+        Items items = new Items();
+        items = (Items)HelperServletConnection.requestServletDBAction(items, HelperServletConnection.ACTION_SELECT);
         // Pasar la lista a la tabla
         ObservableList<Item> observableListItems = FXCollections.observableArrayList(
                 items.getItemsList());
@@ -106,7 +108,8 @@ public class Screen0Controller implements Initializable {
             Items items = new Items();
             Item itemRemoving = tableView.getSelectionModel().getSelectedItem();
             items.getItemsList().add(itemRemoving);
-            HelperServletConnection.requestServletDBAction(Items.class, items, 0);
+            HelperServletConnection.requestServletDBAction(
+                    items, HelperServletConnection.ACTION_DELETE);
 
             URL url = new URL("http://213.96.173.88:8088/ItemsSampleDBJavaWeb/RequestItems?op=DELETE");
             URLConnection uc = url.openConnection();
