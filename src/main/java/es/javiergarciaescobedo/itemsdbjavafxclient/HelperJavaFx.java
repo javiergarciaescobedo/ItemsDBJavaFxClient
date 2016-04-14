@@ -1,4 +1,4 @@
-package es.javiergarciaescobedo.masterdetailfxml;
+package es.javiergarciaescobedo.itemsdbjavafxclient;
 
 import java.text.DateFormat;
 import java.time.Instant;
@@ -9,7 +9,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
-public class UtilJavaFx {
+public class HelperJavaFx {
     
     public static void setDateFormatColumn(TableColumn dateColumn, int dateFormat) {
         DateFormat format = DateFormat.getDateInstance(dateFormat);

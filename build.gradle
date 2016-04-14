@@ -3,14 +3,14 @@ apply plugin: 'java'
 // Añadido para evitar el error "no main manifest attribute" al ejecutar el jar
 jar {
     manifest {
-        attributes 'Main-Class': 'es.javiergarciaescobedo.masterdetailfxml.Main'
+        attributes 'Main-Class': 'es.javiergarciaescobedo.itemsdbjavafxclient.Main'
     }
 }
 
 
 // Añadir archivo properties en la distribución de la aplicación
 apply plugin: 'application'
-mainClassName = "es.javiergarciaescobedo.masterdetailfxml.Main"
+mainClassName = "es.javiergarciaescobedo.itemsdbjavafxclient.Main"
 applicationDistribution.from("src/main/resources/properties/config_dist.properties") {
     into "lib/properties"
 }
@@ -27,7 +27,7 @@ sourceCompatibility = '1.8'
 // prefer. In this case NetBeans will not add these tasks but you may rely on
 // your own implementation.
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'es.javiergarciaescobedo.masterdetailfxml.Main'
+    ext.mainClass = 'es.javiergarciaescobedo.itemsdbjavafxclient.Main'
 }
 
 repositories {

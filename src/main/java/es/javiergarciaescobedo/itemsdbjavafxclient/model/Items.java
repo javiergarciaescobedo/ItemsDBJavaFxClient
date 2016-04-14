@@ -1,4 +1,4 @@
-package es.javiergarciaescobedo.masterdetailfxml.model;
+package es.javiergarciaescobedo.itemsdbjavafxclient.model;
 
 import java.util.ArrayList;
 import java.util.List;

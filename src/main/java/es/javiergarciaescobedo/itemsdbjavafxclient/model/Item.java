@@ -1,4 +1,4 @@
-package es.javiergarciaescobedo.masterdetailfxml.model;
+package es.javiergarciaescobedo.itemsdbjavafxclient.model;
 
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;

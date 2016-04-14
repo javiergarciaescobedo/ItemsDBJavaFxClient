@@ -14,8 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<StackPane styleClass="background-light" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.javiergarciaescobedo.masterdetailfxml.Screen1Controller">
+<StackPane styleClass="background-light" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.javiergarciaescobedo.itemsdbjavafxclient.ControllerItemDetail">
    <children>
       <VBox>
          <children>

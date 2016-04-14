@@ -1,13 +1,9 @@
-package es.javiergarciaescobedo.masterdetailfxml;
+package es.javiergarciaescobedo.itemsdbjavafxclient;
 
-import es.javiergarciaescobedo.masterdetailfxml.model.Item;
-import es.javiergarciaescobedo.masterdetailfxml.model.Items;
-import java.io.BufferedReader;
+import es.javiergarciaescobedo.itemsdbjavafxclient.model.Item;
+import es.javiergarciaescobedo.itemsdbjavafxclient.model.Items;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.text.DateFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -22,15 +18,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 
 /**
  * FXML Controller class
  *
  * @author Javier García Escobedo <javiergarciaescobedo.es>
  */
-public class Screen0Controller implements Initializable {
+public class ControllerItemsList implements Initializable {
 
     @FXML
     private TableView<Item> tableView;
@@ -70,12 +64,12 @@ public class Screen0Controller implements Initializable {
         tableColumnAdate.setMaxWidth(150);
         tableColumnAdate.setStyle("-fx-alignment: CENTER;");
         tableColumnAdate.setCellValueFactory(new PropertyValueFactory("adate"));
-        UtilJavaFx.setDateFormatColumn(tableColumnAdate, DateFormat.MEDIUM);
+        HelperJavaFx.setDateFormatColumn(tableColumnAdate, DateFormat.MEDIUM);
 
         // Descargar la lista con items que hay en la BD
-//        Items items = HelperServletConnection.downloadItems();
         Items items = new Items();
-        items = (Items)HelperServletConnection.requestServletDBAction(items, HelperServletConnection.ACTION_SELECT);
+        items = (Items)HelperServletConnection.requestServletDBAction(
+                items, HelperServletConnection.ACTION_SELECT);
         // Pasar la lista a la tabla
         ObservableList<Item> observableListItems = FXCollections.observableArrayList(
                 items.getItemsList());
@@ -90,7 +84,7 @@ public class Screen0Controller implements Initializable {
 
     @FXML
     private void onMouseClickedButtonEdit(MouseEvent event) {
-        showScreen1();
+        showScreen1(ControllerItemDetail.EDIT_MODE);
     }
 
     @FXML
@@ -98,48 +92,31 @@ public class Screen0Controller implements Initializable {
         Item item = new Item();
         tableView.getItems().add(item);
         tableView.getSelectionModel().select(item);
-        showScreen1();
+        showScreen1(ControllerItemDetail.INSERT_MODE);
     }
 
     @FXML
     private void onMouseClickedButtonRemove(MouseEvent event) {
-        //tableView.getItems().remove(tableView.getSelectionModel().getSelectedItem());
         try {
             Items items = new Items();
             Item itemRemoving = tableView.getSelectionModel().getSelectedItem();
             items.getItemsList().add(itemRemoving);
             HelperServletConnection.requestServletDBAction(
                     items, HelperServletConnection.ACTION_DELETE);
-
-            URL url = new URL("http://213.96.173.88:8088/ItemsSampleDBJavaWeb/RequestItems?op=DELETE");
-            URLConnection uc = url.openConnection();
-            HttpURLConnection conn = (HttpURLConnection) uc;
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-type", "text/xml");
-
-            // Enviar al servidor, en formato XML, el elemento seleccionado en la tabla
-            JAXBContext jaxbContext = JAXBContext.newInstance(Items.class);
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-            jaxbMarshaller.marshal(items, conn.getOutputStream());
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println(inputLine);
-            }
-            in.close();
+            tableView.getItems().remove(itemRemoving);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void showScreen1() {
+    private void showScreen1(byte modeEditInsert) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Screen1.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ItemDetail.fxml"));
             Parent parentScreen1 = loader.load();
-            Screen1Controller screen1Controller = loader.getController();
+            ControllerItemDetail screen1Controller = loader.getController();
+            // Indicar si se va a editar o insertar para que se haga la operación
+            //  adecuada en la base de datos al guardar los cambios
+            screen1Controller.setMode(modeEditInsert);
             // Pasar una referencia a la tabla para que Screen1 pueda acceder a su contenido
             screen1Controller.setTableView(tableView);
             // Rellenar Screen1 con los datos del objeto actual

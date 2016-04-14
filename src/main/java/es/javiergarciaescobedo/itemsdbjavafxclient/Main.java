@@ -1,4 +1,4 @@
-package es.javiergarciaescobedo.masterdetailfxml;
+package es.javiergarciaescobedo.itemsdbjavafxclient;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -25,7 +25,7 @@ public class Main extends Application {
             root = new StackPane();
 
             // Cargar primera pantalla (Screen0)
-            Parent personDetailParent = FXMLLoader.load(getClass().getResource("/fxml/Screen0.fxml"));
+            Parent personDetailParent = FXMLLoader.load(getClass().getResource("/fxml/ItemsList.fxml"));
             root.getChildren().add(personDetailParent);     
             
             Scene scene = new Scene(root, 400, 300);            

@@ -1,6 +1,6 @@
-package es.javiergarciaescobedo.masterdetailfxml;
+package es.javiergarciaescobedo.itemsdbjavafxclient;
 
-import es.javiergarciaescobedo.masterdetailfxml.model.Items;
+import es.javiergarciaescobedo.itemsdbjavafxclient.model.Items;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
