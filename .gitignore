@@ -2,3 +2,4 @@
 .nb-gradle
 build
 src/main/resources/properties/config.properties
+private
