@@ -27,36 +27,39 @@ public class HelperServletConnection {
             String port = properties.getProperty("port");
             String servlet = properties.getProperty("servlet");
             
-            String strAction = "select";
-            switch(action) {
-                case ACTION_SELECT:
-                    strAction = "select";
-                    break;
-                case ACTION_INSERT:
-                    strAction = "insert";
-                    break;
-                case ACTION_UPDATE:
-                    strAction = "update";
-                    break;
-                case ACTION_DELETE:
-                    strAction = "delete";
-                    break;
-            }
-            
-            String strConnection = "http://" + server + ":" + port + "/" + servlet + "?action=" + strAction;
+            String strConnection = "http://" + server + ":" + port + "/" + servlet;
             URL url = new URL(strConnection);
             LOG.fine("Connecting to: " + strConnection);
             URLConnection uc = url.openConnection();
             HttpURLConnection conn = (HttpURLConnection) uc;
             conn.setDoInput(true);
             conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-type", "text/xml");
+            switch(action) {
+                case ACTION_SELECT:
+                    conn.setRequestMethod("GET");
+                    LOG.fine("GET Method");
+                    break;
+                case ACTION_INSERT:
+                    conn.setRequestMethod("POST");
+                    LOG.fine("POST Method");
+                    break;
+                case ACTION_UPDATE:
+                    conn.setRequestMethod("PUT");
+                    LOG.fine("PUT Method");
+                    break;
+                case ACTION_DELETE:
+                    conn.setRequestMethod("DELETE");
+                    LOG.fine("DELETE Method");
+                    break;
+            }
 
-            // Enviar al servidor, en formato XML, el objeto que se ha pasado por parámetro
             JAXBContext jaxbContext = JAXBContext.newInstance(Items.class);
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-            jaxbMarshaller.marshal(object, conn.getOutputStream());
+            if(action != ACTION_SELECT) {
+                // Enviar al servidor, en formato XML, el objeto que se ha pasado por parámetro
+                Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+                jaxbMarshaller.marshal(object, conn.getOutputStream());
+            }
 
             InputStreamReader isr = new InputStreamReader(conn.getInputStream());
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
