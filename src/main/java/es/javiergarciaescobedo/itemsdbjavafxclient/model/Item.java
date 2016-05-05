@@ -1,5 +1,6 @@
 package es.javiergarciaescobedo.itemsdbjavafxclient.model;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,7 +25,7 @@ public class Item {
     @XmlElement
     private Double adouble;
     @XmlElement
-    private BigInteger aprice;
+    private BigDecimal aprice;
     @XmlElement
     private Date atime;
     @XmlElement
@@ -33,7 +34,7 @@ public class Item {
     public Item() {
     }
 
-    public Item(int id, String astring, Integer anumber, Date adate, Boolean aboolean, Double adouble, BigInteger aprice, Date atime, Category category) {
+    public Item(int id, String astring, Integer anumber, Date adate, Boolean aboolean, Double adouble, BigDecimal aprice, Date atime, Category category) {
         this.id = id;
         this.astring = astring;
         this.anumber = anumber;
@@ -93,11 +94,11 @@ public class Item {
         this.adouble = adouble;
     }
 
-    public BigInteger getAprice() {
+    public BigDecimal getAprice() {
         return aprice;
     }
 
-    public void setAprice(BigInteger aprice) {
+    public void setAprice(BigDecimal aprice) {
         this.aprice = aprice;
     }
 

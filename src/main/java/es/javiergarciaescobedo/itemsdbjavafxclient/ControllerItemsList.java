@@ -68,8 +68,8 @@ public class ControllerItemsList implements Initializable {
 
         // Descargar la lista con items que hay en la BD
         Items items = new Items();
-        items = (Items)HelperServletConnection.requestServletDBAction(
-                items, HelperServletConnection.ACTION_SELECT);
+        items = (Items)HelperRestfulConnection.requestServletDBAction(
+                items, "GET", "RequestItems");
         // Pasar la lista a la tabla
         ObservableList<Item> observableListItems = FXCollections.observableArrayList(
                 items.getItemsList());
@@ -101,8 +101,8 @@ public class ControllerItemsList implements Initializable {
             Items items = new Items();
             Item itemRemoving = tableView.getSelectionModel().getSelectedItem();
             items.getItemsList().add(itemRemoving);
-            HelperServletConnection.requestServletDBAction(
-                    items, HelperServletConnection.ACTION_DELETE);
+            HelperRestfulConnection.requestServletDBAction(
+                    items, "DELETE", "RequestItems");
             tableView.getItems().remove(itemRemoving);
         } catch (Exception e) {
             e.printStackTrace();

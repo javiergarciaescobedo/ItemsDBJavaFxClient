@@ -13,7 +13,7 @@ public class Categories {
 
     // A la etiqueta que identifique el inicio y fin de cada categoría en el XML, se le va
     //  a llamar 'categories' en lugar de 'categoriesList'
-    @XmlElement(name = "categories")
+    @XmlElement(name = "category")
     private List<Category> categoriesList;
 
     public Categories() {
