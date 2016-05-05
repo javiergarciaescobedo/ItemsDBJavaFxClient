@@ -1,5 +1,6 @@
 package es.javiergarciaescobedo.itemsdbjavafxclient.model;
 
+import java.math.BigInteger;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,18 +16,33 @@ public class Item {
     @XmlElement
     private String astring;
     @XmlElement
-    private int anumber;
+    private Integer anumber;
     @XmlElement
     private Date adate;
+    @XmlElement
+    private Boolean aboolean;
+    @XmlElement
+    private Double adouble;
+    @XmlElement
+    private BigInteger aprice;
+    @XmlElement
+    private Date atime;
+    @XmlElement
+    private Category category;
 
     public Item() {
     }
 
-    public Item(int id, String astring, int anumber, Date adate) {
+    public Item(int id, String astring, Integer anumber, Date adate, Boolean aboolean, Double adouble, BigInteger aprice, Date atime, Category category) {
         this.id = id;
         this.astring = astring;
         this.anumber = anumber;
         this.adate = adate;
+        this.aboolean = aboolean;
+        this.adouble = adouble;
+        this.aprice = aprice;
+        this.atime = atime;
+        this.category = category;
     }
 
     public int getId() {
@@ -45,11 +61,11 @@ public class Item {
         this.astring = astring;
     }
 
-    public int getAnumber() {
+    public Integer getAnumber() {
         return anumber;
     }
 
-    public void setAnumber(int anumber) {
+    public void setAnumber(Integer anumber) {
         this.anumber = anumber;
     }
 
@@ -60,5 +76,46 @@ public class Item {
     public void setAdate(Date adate) {
         this.adate = adate;
     }
+
+    public Boolean getAboolean() {
+        return aboolean;
+    }
+
+    public void setAboolean(Boolean aboolean) {
+        this.aboolean = aboolean;
+    }
+
+    public Double getAdouble() {
+        return adouble;
+    }
+
+    public void setAdouble(Double adouble) {
+        this.adouble = adouble;
+    }
+
+    public BigInteger getAprice() {
+        return aprice;
+    }
+
+    public void setAprice(BigInteger aprice) {
+        this.aprice = aprice;
+    }
+
+    public Date getAtime() {
+        return atime;
+    }
+
+    public void setAtime(Date atime) {
+        this.atime = atime;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
 
 }
